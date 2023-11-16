@@ -1,0 +1,87 @@
+@keyframes fade{
+	from{opacity: 0.0}
+	to{opacity: 1.0}
+}
+body{
+	animation-name: fade;
+	animation-duration: 4s;
+	background-image: url("1624.jpg");
+	background-repeat: no-repeat;
+	background position: center center;
+	background-size: 130em 70em;
+	background-attachment:fixed ;
+	background-position-x: -5em;
+	font-family: 'Lazer Game Zone',"Lucida Handwriting", serif; 
+	color: #CC5500;
+}	
+h1{
+	text-shadow:  0px 0px yellow;
+	animation: glow 1s ease-in-out infinite alternate, glitch 1s linear infinite;
+	color: #CC5500;
+	font-size: 70px;
+	text-align: center;
+	margin-left: 0.7em;
+	margin-top: 1em;
+
+}
+
+@keyframes glitch{
+  2%,54%{
+    transform: translate(1px,0) skew(0deg);
+  }
+  4%,50%{
+    transform: translate(-1px,0) skew(0deg);
+  }
+  52%{
+    transform: translate(0,0) skew(12deg); 
+  }
+}
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px white, 0 0 10px white, 0 0 15px #f2b188, 0 0 20px #f2b188, 0 0 25px #f2b188, 0 0 30px #f2b188, 0 0 35px #f2b188;
+  }
+  
+  to {
+    text-shadow: 0 0 10px white, 0 0 15px #ce95e8, 0 0 20px #ce95e8, 0 0 25px #ce95e8, 0 0 30px #ce95e8, 0 0 35px #ce95e8, 0 0 40px #ce95e8;
+  }
+}
+table{
+	 margin-left: auto; 
+  	margin-right: auto;
+	width: 15em;
+	border-spacing: 1em;
+	font-size: 20px;
+}
+tr{
+	text-align: center;
+	height: 4em;
+}
+th{
+	background-color: yellow ;
+	border: 3px solid #CC5500;
+	border-radius: 1em;
+	transition: 0.8s;
+	transition-property: background-color,border-color;
+	transition-timing-function: ease-in-out;
+}
+th:hover{
+	background-color: #CC5500;
+	border-color: yellow;
+}
+th a {
+	color: #CC5500;
+    display:block;
+    transition-property: color;
+	transition: 0.8s;
+	transition-timing-function: ease-in-out;
+  }
+  th:hover > a{
+	color: yellow;
+}
+
+div {
+	color:yellow;
+	background-color: mediumpurple;
+	text-align: justify;
+	padding: 5em 10em;
+}

@@ -1,0 +1,124 @@
+@keyframes fade{
+	from{opacity: 0.0}
+	to{opacity: 1.0}
+}
+body{
+	animation-name: fade;
+	animation-duration: 4s;
+	background-image: url("1624.jpg");
+	background-repeat: no-repeat;
+	background position: center center;
+	background-size: 130em 70em;
+	background-attachment:fixed ;
+	background-position-x: -5em;
+	font-family: 'Lazer Game Zone','Lucida Handwriting', serif; 
+}	
+h1 {
+	text-shadow:  0px 0px yellow;
+	animation: glow 1s ease-in-out infinite alternate, glitch 1s linear infinite;
+	color: #CC5500;
+	font-size: 70px;
+	text-align: center;
+	margin-left: 0.7em;
+	margin-top: 1em;
+	font-family: 'Lazer Game Zone', 'Lucida Handwriting';
+	transition: color;
+	transition-duration: 0.8s;
+	transition-timing-function: ease-in-out;
+}
+h1:hover{
+	color: yellow;
+}
+@keyframes glitch{
+  2%,54%{
+    transform: translate(2px,0) skew(0deg);
+  }
+  4%,50%{
+    transform: translate(-2px,0) skew(0deg);
+  }
+  52%{
+    transform: translate(0,0) skew(12deg); 
+  }
+}
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px white, 0 0 10px white, 0 0 15px #9a88f2, 0 0 20px #9a88f2, 0 0 25px #9a88f2, 0 0 30px #9a88f2, 0 0 35px #9a88f2;
+  }
+  
+  to {
+    text-shadow: 0 0 10px white, 0 0 15px #ce95e8, 0 0 20px #ce95e8, 0 0 25px #ce95e8, 0 0 30px #ce95e8, 0 0 35px #ce95e8, 0 0 40px #ce95e8;
+  }
+}
+
+#maindiv {
+	font-size: 20px;
+	color:yellow;
+	background-color: rgb(93,63,211);
+	background-color: rgba(93,63,211,0.8);
+	text-align:justify-all;
+	padding: 1.5em;
+	max-width: 70em;
+	margin: auto;
+	border: 0.2em ridge rgba(93,63,211,0.8);
+	border-radius: 3em;
+	box-shadow:  0px 0px yellow;
+	 animation: glowdiv 1s ease-in-out infinite alternate;
+	 transition: 0.8s;
+	 transition-property: background-color, border-color;
+	transition-timing-function: ease-in-out;
+}
+@keyframes glowdiv {
+  from {
+    box-shadow: 0 0 2px white, 0 0 4px white, 0 0 6px #9a88f2, 0 0 8px #9a88f2, 0 0 10px #9a88f2, 0 0 12px #9a88f2, 0 0 14px #9a88f2;
+  }
+  
+  to {
+    box-shadow: 0 0 4px white, 0 0 6px #ce95e8, 0 0 8px #ce95e8, 0 0 10px #ce95e8, 0 0 12px #ce95e8, 0 0 14px #ce95e8, 0 0 16px #ce95e8;
+  }
+}
+.items {
+	list-style-image: url("explode.png");
+}
+#divleft{
+	float: left;
+	text-align: center;
+	margin: auto;
+	margin-left: 7em;
+}
+#divright{
+	float: right;
+	margin: auto;
+	margin-right: 7em;
+	text-align: center;
+}
+th{
+	background-color: #CC5500 ;
+	border: 3px solid yellow;
+	border-radius: 1em;
+	transition: 0.8s;
+	transition-property: background-color,border-color;
+	transition-timing-function: ease-in-out;
+}
+table{
+	margin-top: 2em;
+	margin-left: auto; 
+  margin-right: auto;
+	width: 15em;
+	font-size: 20px;
+	font-family: 'Lazer Game Zone', 'Lucida Handwriting';
+}
+tr{
+	text-align: center;
+	height: 3em;
+}
+th a {
+	color: yellow;
+	display:block;
+	transition-property: color;
+	transition: 0.8s;
+	transition-timing-function: ease-in-out;
+}
+th:hover{
+	background-color: #5D3FD3;
+}
+

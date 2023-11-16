@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="game.css">
+	<link href="https://fonts.cdnfonts.com/css/lazer-game-zone" rel="stylesheet">
+	<title>Minesweeper</title>
+</head>
+<body>
+<h1>Minesweeper</h1>
+<script type="text/javascript">
+	//using some custom attributes:revealed,bomb,condition,count
+	
+	const gamediv = document.createElement('div');//creates the game div
+	gamediv.id = 'gamediv';
+	const gameTable = document.createElement('table');//creates the table
+	gameTable.border = '1';//sets border size
+	gameTable.id = 'game';
+
+	//ceates first row
+	const biggerRow = document.createElement('tr');//creates the row that's a bit bigger so that it can append the timber and bombs divs
+	biggerRow.id = 'bigger';
+	const biggerRowCell = document.createElement('td');//creates the cell with colspan 10
+	biggerRowCell.colSpan = '10';
+	const bombsDiv = document.createElement('div');//creates div with bomb count
+	bombsDiv.id = 'bombs';
+	const bombsParagraph = document.createElement('p');
+	bombsParagraph.textContent = 'Bombs: 10';
+	bombsParagraph.style.fontSize="20px";
+	const timerDiv = document.createElement('div');//creates div with timer
+	timerDiv.id = 'timer';
+	const timerParagraph = document.createElement('p');
+	timerParagraph.textContent = '00:00';
+
+
+	//appending children to appropriate parents
+	bombsDiv.appendChild(bombsParagraph);
+	timerDiv.appendChild(timerParagraph);
+	biggerRowCell.appendChild(bombsDiv);
+	biggerRowCell.appendChild(timerDiv);
+	biggerRow.appendChild(biggerRowCell);
+
+	//appends the row to the table
+	gameTable.appendChild(biggerRow);
+
+	//timer vars
+	var TotalSecFractions = 0;//curent total fractions
+	var timerInterval = null;//not set
+	var timerStarted = false;//hasn't started yet
+
+	//for loop for creating  10 rows and cells
+	for (let i = 0; i < 10; i++) {
+	  const row = document.createElement('tr');
+	  for (let j = 0; j < 10; j++) {
+	    const cell = document.createElement('td');
+	    cell.className = 'hoverable';
+	    cell.style.height="2em";
+	    cell.style.width="2em";
+	   	cell.id = `${i},${j}`;//id will be i,j
+	    row.appendChild(cell);//appends the cell to appropriate row
+
+	  //adding event listener to each cell
+	    cell.addEventListener('click', () => {
+	      if (cell.getAttribute('bomb') === 'true') {//cell contains a bomb, end game
+	        endGame();
+	      } else {//cell does not contain a bomb, reveal it and neighbouring cells that dont contain bombs
+	        reveal(cell);
+	        revealNeighbour(i, j);
+	        checkWin();
+	      }
+	    });
+
+	  }
+	  gameTable.appendChild(row);//appends row to the table
+	}
+	gamediv.appendChild(gameTable);//appends the table to the div
+
+	document.body.appendChild(gamediv);//appends div to the body
+	var bombNum=0;
+	
+	//bomb placer
+	while(bombNum<10){
+		//random numbers from 0 to 9
+		let i=Math.floor(Math.random()*10);
+		let j=Math.floor(Math.random()*10);
+
+		let bomb=document.getElementById(`${i},${j}`);
+		if (bomb.getAttribute('bomb') !== 'true') {//if doesnt already contain bomb
+
+		    bomb.setAttribute('bomb', 'true');
+			//create image for bomb
+			const bombImg = document.createElement('img');
+		    bombImg.src = 'explode.png';//set image path
+		    bombImg.style.visibility="hidden";
+		    bomb.appendChild(bombImg);
+		    bombNum++;
+		  }
+	}
+	//calculate number of neighbour bombs for each cell
+	for (let i = 0; i < 10; i++) {
+	  for (let j = 0; j < 10; j++) {
+	  	const cell=document.getElementById(`${i},${j}`);
+	    if(cell.getAttribute('bomb')!=='true')//strict equality(same type and value) 
+	    {
+	    	var bombCtr=0;//how many bombs are near that field
+	    	for (let row = i - 1; row <= i + 1; row++) {
+        	for (let col = j - 1; col <= j + 1; col++) {
+        		if (row >= 0 && row < 10 && col >= 0 && col < 10) {// makes sure the cell is within the grid
+            const neighborCell = document.getElementById(`${row},${col}`);
+            if (neighborCell.getAttribute('bomb') === 'true') {//if neghbour has bomb
+              bombCtr++;
+            }
+          }
+        }
+      }
+      cell.setAttribute("count",`${bombCtr}`);//count value of bombctr
+      cell.style.color="mediumpurple"; //hides the value
+	    }
+	  }
+	}
+	//reveals the selected cell
+	function reveal(cell){
+		let nBombs=cell.getAttribute("count");
+		cell.style.backgroundColor="mediumpurple";
+		if(nBombs>0){//sets the colors and text
+			      cell.textContent = nBombs;
+			      if(nBombs==="1") cell.style.color="green";
+				     else if(nBombs=== '2') cell.style.color="yellow";
+				     else cell.style.color="red";
+			 }
+		cell.setAttribute('revealed',"true");//it's revealed now
+	}
+	//recursive function that reveals neighbours if they dont have bombs
+	function revealNeighbour(row, col) {
+	  // checks neighbouring cells
+	  for (let i = row - 1; i <= row + 1; i++) {
+	    for (let j = col - 1; j <= col + 1; j++) {
+	      if (i >= 0 && i < 10 && j >= 0 && j < 10) {
+	        const cell = document.getElementById(`${i},${j}`);
+	        if (cell.getAttribute('revealed') !== 'true'&&cell.getAttribute('bomb')!=='true') {
+	          // if cell isnt revealed and doesnt have a bomb, reveal it
+	          reveal(cell);
+	          if (cell.getAttribute('count') === '0') {
+	            // if cell has no neighbouring bombs, reveal adjacent cells
+	            revealNeighbour(i, j);
+	          }
+	        }
+	      }
+	    }
+	  }
+	}
+	//you lost
+	function endGame(){
+		for (let i=0;i<10;i++) {
+			for (let j=0; j <10; j++) {
+				cell=document.getElementById(`${i},${j}`);
+				if(cell.getAttribute('bomb')==="true"){
+					for(let k=0;k<10;k++){//gets all elements from the img collection and makes them visible 
+					document.getElementsByTagName("img")[k].style.visibility="visible";
+					cell.style.backgroundColor="mediumpurple";
+					}
+				}
+				else reveal(cell);
+			}
+		}
+		gameTable.setAttribute('condition','lost');
+		clearInterval(timerInterval);
+		stopTimer();//stops the timer		
+		gameTable.removeEventListener('click', function() {
+  	startTimer();
+		});
+		alert("Game over.\nClick OK to play again.");
+    	//reload after the delay, parameters are function and delay in milliseconds
+				setTimeout(function(){
+   				location.reload();
+				}, 2000);
+	}
+
+	//checks win
+	function checkWin(){
+		if(gameTable.getAttribute('condition')!=='lost'){
+			let bombs=0;
+			let unrevealed=0
+			for (let i=0;i<10;i++) {//reveals where the bombs are
+			for (let j=0; j <10; j++) {
+				cell=document.getElementById(`${i},${j}`);
+				if(cell.getAttribute('bomb')==="true"){
+						bombs++;
+					}
+				if(cell.getAttribute("revealed")!=="true")
+					unrevealed++;
+				}
+			}
+			//you won
+				if (bombs===unrevealed) {//if all the unreveald cells are bombs, you won
+				gameTable.setAttribute("condition","won");
+				stopTimer();
+				alert("You won! :)\nClick OK to play again!");
+				//reload after 2 seconds
+				setTimeout(function(){
+   				location.reload();
+				}, 2000);
+				for (let i=0;i<10;i++) {//reveals where the bombs are
+				for (let j=0; j <10; j++) {
+					cell=document.getElementById(`${i},${j}`);
+					if(cell.getAttribute('bomb')==="true"){
+						for(let k=0;k<10;k++){//gets all elements from the img collection and reveals them, so you can see the whole table
+						document.getElementsByTagName("img")[k].style.visibility="visible";
+						cell.style.backgroundColor="mediumpurple";
+						}
+					}
+					else reveal(cell);
+				}
+			}
+		}
+	}
+}
+//timer functionality
+gameTable.addEventListener('click', function() {
+  startTimer();
+});//on any click on the table the timer starts
+function makeTimerText(secFractions) {
+  //gives how many minutes and seconds have passed given the fractions
+  var minutes = Math.floor(secFractions / 600);//sec fractions are tenths of a second and if we divide them by 10 we get seconds and if we divide that by 60 we get minutes
+  var seconds = Math.floor(secFractions / 10) % 60;// dividing by 10 gets seconds and modulo 60 makes sure that they are between 0 and 59
+  if (seconds < 10) {
+    seconds = "0" + seconds;
+  }
+  if (minutes < 10) {
+    minutes = "0" + minutes;
+  }
+  return (minutes + ":" + seconds);
+}
+
+function incrementTimeByOneFraction() {//increments the fractions 
+	if(gameTable.getAttribute("condition")==="lost"||gameTable.getAttribute("condition")==="won") return;// if game is lost do nothing
+  TotalSecFractions++;
+  timerParagraph.textContent = makeTimerText(TotalSecFractions);
+}
+function startTimer() {
+	if (timerStarted) {
+    return;
+  }//if timer has already started,do nothing
+    timerInterval = setInterval(incrementTimeByOneFraction, 100);//repeatedly calls this function with a delay of 100 ms
+    timerStarted = true;
+}
+function stopTimer() {//stops the timer
+	clearInterval(timerInterval);
+    			timerStarted = false;
+    			TotalSecFractions = 0;//makes the seconds 0 again
+  				timerParagraph.textContent = makeTimerText(TotalSecFractions);//sets the timer to 0 again
+}
+</script>
+<div id="divleft">
+		<table class="buttons">
+			<tr class="buttonsrow">
+				<th>
+					<a href="intropage.html">Main Menu</a>
+				</th>
+			</tr>
+		</table>
+	</div>
+	<div id="divright">
+		<table class="buttons">
+			<tr class="buttonsrow">
+				<th>
+					<a href="instructions.html">Instructions</a>
+				</th>
+			</tr>
+		</table>
+	</div>	
+</div>
+</body>
+</html>

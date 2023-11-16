@@ -1,0 +1,157 @@
+body{
+	animation-name: fade;
+	animation-duration: 4s;
+	background-image: url("1624.jpg");
+	background-repeat: no-repeat;
+	background position: center center;
+	background-size: 121em 70em;
+	background-attachment:fixed ;
+	background-position-x: -5em;
+	font-family: 'Lazer Game Zone','Lucida Handwriting', serif; 
+}	
+@keyframes fade{
+	from{opacity: 0.0}
+	to{opacity: 1.0}
+}
+h1 {
+	text-shadow:  0px 0px yellow;
+	animation: glow 1s ease-in-out infinite alternate, glitch 1s linear infinite;
+	color: #CC5500;
+	font-size: 70px;
+	text-align: center;
+	margin: auto;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	font-family: 'Lazer Game Zone', 'Lucida Handwriting';
+	transition: color;
+	transition-duration: 0.8s;
+	transition-timing-function: ease-in-out;
+}
+h1:hover{
+	color: yellow;
+}
+@keyframes glitch{
+  2%,54%{
+    transform: translate(2px,0) skew(0deg);
+  }
+  4%,50%{
+    transform: translate(-2px,0) skew(0deg);
+  }
+  52%{
+    transform: translate(0,0) skew(12deg); 
+  }
+}
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px white, 0 0 10px white, 0 0 15px #9a88f2, 0 0 20px #9a88f2, 0 0 25px #9a88f2, 0 0 30px #9a88f2, 0 0 35px #9a88f2;
+  }
+  
+  to {
+    text-shadow: 0 0 10px white, 0 0 15px #ce95e8, 0 0 20px #ce95e8, 0 0 25px #ce95e8, 0 0 30px #ce95e8, 0 0 35px #ce95e8, 0 0 40px #ce95e8;
+  }
+  }
+@keyframes glowdiv {
+  from {
+    box-shadow: 0 0 2px white, 0 0 4px white, 0 0 6px #9a88f2, 0 0 8px #9a88f2, 0 0 10px #9a88f2, 0 0 12px #9a88f2, 0 0 14px #9a88f2;
+  }
+  
+  to {
+    box-shadow: 0 0 4px white, 0 0 6px #ce95e8, 0 0 8px #ce95e8, 0 0 10px #ce95e8, 0 0 12px #ce95e8, 0 0 14px #ce95e8, 0 0 16px #ce95e8;
+  }
+}
+#game{
+	border-color: yellow;
+	font-size: 20px;
+	color:yellow;
+	background-color: rgb(93,63,211);
+	text-align: justify;
+	margin-top: 5em;
+	margin: auto;
+	min-height: 23em;
+	min-width: 23em;
+	box-shadow:  0px 0px #CC5500;
+	 animation: glowdiv 1s ease-in-out infinite alternate;
+	 transition: 0.8s;
+	 transition-property: background-color, border-color;
+	transition-timing-function: ease-in-out;
+}
+.hoverable{
+	background-color: rgb(93,63,211);
+}
+.hoverable:hover{
+	background-color: rgb(59, 46, 110);
+}
+#bigger{
+	height: 4em;
+}
+#bombs{
+	border: 1px ridge yellow;
+	height: 2em;
+	width: 5em;
+	text-align: center;
+	margin: 1em;
+	position: relative;
+	left: 1em;
+	float: left;
+	background-color: mediumpurple;
+}
+#timer{
+	border: 1px ridge yellow;
+	height: 2em;
+	width: 5em;
+	text-align: center;
+	margin: 1em;
+	position: relative;
+	right: 1em;
+	float: right;
+	background-color: mediumpurple;
+}
+p{
+	position: relative;
+	top: -0.4em;
+}
+.buttons{
+	width: 10em;
+	border-spacing: 1em;
+	font-size: 20px;
+	font-family: 'Lazer Game Zone', 'Lucida Handwriting';
+}
+.buttonrows{
+	text-align: center;
+}
+th{
+	background-color: #CC5500 ;
+	border: 3px solid yellow;
+	border-radius: 1em;
+	transition: 0.8s;
+	transition-property: background-color,border-color;
+	transition-timing-function: ease-in-out;
+	padding: 0.7em;
+}
+th:hover{
+	background-color: yellow;
+	border-color: #CC5500;
+}
+th a {
+	color: yellow;
+	display:block;
+	transition-property: color;
+	transition: 0.8s;
+	transition-timing-function: ease-in-out;
+  }
+  th:hover > a{
+	color: #CC5500;
+}
+
+#divleft{
+	float: left;
+	text-align: center;
+	margin: auto;
+	margin-left: 10em;
+}
+#divright{
+	float: right;
+	margin: auto;
+	margin-right: 10em;
+	text-align: center;
+}
